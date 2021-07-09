@@ -178,6 +178,15 @@ class CefDataFrameReaderTests extends AnyFlatSpec with Matchers with BeforeAndAf
     df.count() should be(9)
   }
 
+  it should "read files with spaces in the path name" in {
+    val inputFile = ResourceFileUtils.getFilePath("/cef-records/citrix events.cef")
+
+    val df = spark.read
+      .cef(inputFile)
+
+    df.count() should be(4)
+  }
+
   it should "be registered as a SQL data provider" in {
     val sourceFile = ResourceFileUtils.getFilePath("/cef-records/imperva-access-event.cef.gz")
 
