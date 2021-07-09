@@ -1,8 +1,6 @@
 package com.bp.sds.cef.utils
 
-import java.net.URI
-import java.nio.file.Path
-
+import java.net.{URI, URLDecoder}
 import scala.io.{BufferedSource, Source}
 
 object ResourceFileUtils {
@@ -19,7 +17,8 @@ object ResourceFileUtils {
   }
 
   def getFilePath(relativePath: String): String = {
-    getClass.getResource(relativePath).getPath
+    val path = getClass.getResource(relativePath).getPath
+    URLDecoder.decode(path, "utf8")
   }
 
   def getResourceRoot: URI = {
