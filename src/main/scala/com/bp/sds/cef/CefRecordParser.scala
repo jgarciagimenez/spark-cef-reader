@@ -124,7 +124,7 @@ private[cef] class CefRecordParser(options: CefParserOptions) extends Logging {
       case e: Exception => throw CefRecordParserException("Missing severity in record", Some(rowData), e)
     }
 
-    if (cefSplit.length != 8) {
+    if (cefSplit.length < 8) {
       throw new CefRecordParserException("Record does not contain the correct number of pipe separated values", rowData)
     }
 
@@ -132,7 +132,10 @@ private[cef] class CefRecordParser(options: CefParserOptions) extends Logging {
     // might not match the full data set size, but this should reduce the number of resize requests required to complete
     // the operation
     val map = new mutable.AnyRefMap[String, Any](fields.length * 2)
-    buildHashmapFromCEF(cefSplit(7), map)
+
+    val remainingRow = cefSplit.drop(6).mkString("")
+
+    buildHashmapFromCEF(remainingRow, map)
 
     val mandatoryFieldKeys = CefRecordParser.mandatoryFields.keys.map(_.toLowerCase)
 
