@@ -133,7 +133,7 @@ private[cef] class CefRecordParser(options: CefParserOptions) extends Logging {
     // the operation
     val map = new mutable.AnyRefMap[String, Any](fields.length * 2)
 
-    val remainingRow = cefSplit.drop(6).mkString("")
+    val remainingRow = cefSplit.drop(7).mkString("")
 
     buildHashmapFromCEF(remainingRow, map)
 
